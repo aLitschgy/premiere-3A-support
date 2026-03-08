@@ -1,0 +1,17 @@
+# Fichier de configuration
+.env
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Dossiers de cache
+cache/
+tmp/

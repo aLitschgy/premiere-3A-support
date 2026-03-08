@@ -1,0 +1,11 @@
+# Empêcher l'accès au fichier .env
+
+<Files .env>
+Require all denied
+</Files>
+
+# Empêcher l'accès aux fichiers cachés
+
+<FilesMatch "^\.">
+Require all denied
+</FilesMatch>
