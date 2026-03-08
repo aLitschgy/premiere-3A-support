@@ -21,7 +21,7 @@ try {
     $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
 
     // Validation du logiciel
-    $allowedSoftware = ['Premiere', 'After Effect', 'Media Encoder'];
+    $allowedSoftware = ['Premiere', 'After Effect', 'other'];
     if (!in_array($software, $allowedSoftware)) {
         throw new Exception('Logiciel non valide.');
     }
@@ -41,7 +41,6 @@ try {
     $_SESSION['success'] = 'Votre ticket a été envoyé avec succès.';
     header('Location: index.php?success=1');
     exit;
-
 } catch (Exception $e) {
     // Redirection avec erreur
     $_SESSION['error'] = $e->getMessage();
