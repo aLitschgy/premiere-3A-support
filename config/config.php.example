@@ -1,0 +1,13 @@
+<?php
+
+function getConfig()
+{
+    // Configuration SMTP - À personnaliser avec vos paramètres
+    return [
+        'SMTP_HOST' => 'smtp.votreserveur.com',
+        'SMTP_PORT' => '587',
+        'SMTP_FROM_EMAIL' => 'support@votredomaine.com',
+        'SMTP_FROM_NAME' => 'Support Technique',
+        'SMTP_TO_EMAIL' => 'admin@votredomaine.com',
+    ];
+}

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../src/MailService.php';
-require_once __DIR__ . '/../src/FileValidator.php';
+require_once __DIR__ . '/src/MailService.php';
+require_once __DIR__ . '/src/FileValidator.php';
 
 session_start();
 

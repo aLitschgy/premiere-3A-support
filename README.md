@@ -18,45 +18,39 @@ Application web simple pour soumettre des tickets de support technique par email
 
 ```
 premiere-3A-support/
-├── public/              # Fichiers accessibles publiquement
-│   ├── index.php        # Page du formulaire
-│   ├── submit.php       # Traitement du formulaire
-│   └── get_message.php  # API pour récupérer les messages de session
+├── index.php            # Page du formulaire
+├── submit.php           # Traitement du formulaire
+├── get_message.php      # API pour récupérer les messages de session
 ├── src/                 # Code source PHP
 │   ├── MailService.php  # Service d'envoi d'emails
 │   └── FileValidator.php # Validation des fichiers
 ├── config/              # Configuration
-│   └── config.php       # Chargement de la configuration
+│   └── config.php       # Configuration SMTP
 ├── assets/              # Ressources statiques
 │   ├── css/
 │   │   └── style.css    # Styles (thème sombre)
 │   └── js/
 │       └── app.js       # JavaScript (notifications, validation)
-├── .env.example         # Exemple de configuration
 └── .gitignore
 ```
 
 ## ⚙️ Installation
 
-### 1. Copier le fichier de configuration
+### 1. Configurer les paramètres SMTP
 
-```bash
-cp .env.example .env
+Éditez le fichier [config/config.php](config/config.php) avec vos paramètres SMTP :
+
+```php
+return [
+    'SMTP_HOST' => 'smtp.votreserveur.com',
+    'SMTP_PORT' => '587',
+    'SMTP_FROM_EMAIL' => 'support@votredomaine.com',
+    'SMTP_FROM_NAME' => 'Support Technique',
+    'SMTP_TO_EMAIL' => 'admin@votredomaine.com',
+];
 ```
 
-### 2. Configurer les paramètres SMTP
-
-Éditez le fichier `.env` avec vos paramètres SMTP :
-
-```env
-SMTP_HOST=smtp.votredomaine.com
-SMTP_PORT=587
-SMTP_FROM_EMAIL=support@votredomaine.com
-SMTP_FROM_NAME=Support Technique
-SMTP_TO_EMAIL=admin@votredomaine.com
-```
-
-### 3. Configurer PHP (optionnel)
+### 2. Configurer PHP (optionnel)
 
 Assurez-vous que votre `php.ini` permet l'upload de fichiers :
 
@@ -66,12 +60,11 @@ upload_max_filesize = 25M
 post_max_size = 25M
 ```
 
-### 4. Démarrer le serveur
+### 3. Démarrer le serveur
 
 Pour tester en local avec PHP 7.3 :
 
 ```bash
-cd public
 php -S localhost:8000
 ```
 
@@ -79,8 +72,8 @@ Puis accédez à `http://localhost:8000`
 
 ## 🌐 Déploiement en production
 
-1. Configurez votre serveur web (Apache/Nginx) pour pointer vers le dossier `public/`
-2. Assurez-vous que le fichier `.env` n'est pas accessible publiquement
+1. Uploadez tous les fichiers sur votre serveur
+2. **Important** : Modifiez les permissions du fichier [config/config.php](config/config.php) pour le protéger (chmod 600 ou 640)
 3. Configurez les permissions appropriées sur les dossiers
 
 ### Exemple de configuration Apache
@@ -88,14 +81,17 @@ Puis accédez à `http://localhost:8000`
 ```apache
 <VirtualHost *:80>
     ServerName support.votredomaine.com
-    DocumentRoot /var/www/premiere-3A-support/public
+    DocumentRoot /var/www/premiere-3A-support
 
-    <Directory /var/www/premiere-3A-support/public>
+    <Directory /var/www/premiere-3A-support>
         AllowOverride All
         Require all granted
     </Directory>
-</VirtualHost>
-```
+
+    # Protéger le fichier de configuration
+    <Files "config.php">
+        Require all denied
+    </Files>
 
 ## 📝 Utilisation
 
@@ -113,7 +109,7 @@ Puis accédez à `http://localhost:8000`
 - Tous les champs sont validés côté serveur
 - Protection XSS avec `htmlspecialchars()`
 - Validation de la taille des fichiers
-- Fichier `.env` exclu du contrôle de version
+- **Important** : Protégez le fichier [config/config.php](config/config.php) pour éviter que les paramètres SMTP soient accessibles
 - Sessions PHP pour les messages flash
 
 ## 📱 Responsive Design
@@ -128,7 +124,7 @@ L'interface s'adapte automatiquement aux différentes tailles d'écran :
 
 ### Les emails ne sont pas envoyés
 
-1. Vérifiez les paramètres SMTP dans `.env`
+1. Vérifiez les paramètres SMTP dans [config/config.php](config/config.php)
 2. Vérifiez les logs PHP pour les erreurs
 3. Testez votre configuration SMTP avec un autre outil
 4. Envisagez d'utiliser PHPMailer pour une meilleure compatibilité
@@ -146,3 +142,4 @@ Ce projet est fourni tel quel sans garantie.
 ## 👤 Auteur
 
 Antonin Litschgy (+ Claude Sonnet à 99%)
+```
