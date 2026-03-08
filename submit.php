@@ -21,7 +21,7 @@ try {
     $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
 
     // Validation du logiciel
-    $allowedSoftware = ['Premiere', 'After Effect', 'other'];
+    $allowedSoftware = ['Premiere', 'After Effect', 'Media Encoder', 'other'];
     if (!in_array($software, $allowedSoftware)) {
         throw new Exception('Logiciel non valide.');
     }

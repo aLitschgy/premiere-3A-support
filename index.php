@@ -31,12 +31,13 @@
                     <select id="software" name="software" required>
                         <option value="">Sélectionnez un logiciel</option>
                         <option value="Premiere">
-                            <i class="devicon-premierepro-plain colored"></i>
                             Premiere
                         </option>
                         <option value="After Effect">
-                            <i class="devicon-aftereffects-plain colored"></i>
                             After Effect
+                        </option>
+                        <option value="Media Encoder">
+                            Media Encoder
                         </option>
                         <option value="other">
                             Autre (préciser en description)
