@@ -6,7 +6,7 @@ session_start();
 
 // Redirection si accès direct sans POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: index.php');
+    header('Location: /');
     exit;
 }
 
@@ -39,11 +39,11 @@ try {
 
     // Redirection avec succès
     $_SESSION['success'] = 'Votre ticket a été envoyé avec succès.';
-    header('Location: index.php?success=1');
+    header('Location: /?success=1');
     exit;
 } catch (Exception $e) {
     // Redirection avec erreur
     $_SESSION['error'] = $e->getMessage();
-    header('Location: index.php?error=1');
+    header('Location: /?error=1');
     exit;
 }
